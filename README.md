@@ -1,3 +1,5 @@
 # DDSI_Seminario2
 
-_comandos_
+_comandos:_
+
+_python3 manage.py runserver_
