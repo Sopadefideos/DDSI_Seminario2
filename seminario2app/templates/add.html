@@ -26,13 +26,8 @@
   <div class="container border border-dark" style="margin-top: 2%; margin-bottom: 2%">
     <div class="row">
       <div class="col" style="margin: 1%">
-        <form method="POST">
-          {% csrf_token %}
-          <h5>AÑADIR PEDIDO</h5>
-          <div class="form-group">
-            <label for="cliente">Nombre del Cliente</label>
-            <input type="text" class="form-control" id="cliente" name="cliente" placeholder="pepito" />
-          </div>
+        <form method="GET">
+          <h5>AÑADIR PRODUCTO</h5>
           <div class="form-group">
             <label for="producto">Codigo del Producto</label>
             <select class="form-control" id="producto" name="producto">
@@ -48,6 +43,12 @@
             <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="cantidad" />
           </div>
           <button type="submit" class="btn btn-dark" style="margin-bottom: 1%;">Añadir!</button>
+          {% for key, value in request.GET.items %}
+            {% if key == 'id'%}
+              <input type="hidden" class="form-control" id="id_pedido" name="id_pedido" value="{{ value }}" />
+            {% endif %}
+          {% endfor %}
+          
         </form>
       </div>
     </div>

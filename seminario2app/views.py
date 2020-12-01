@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from random import randrange
 from django.contrib import messages
 from .models import *
@@ -34,8 +34,36 @@ def index(request):
     return render(request, 'index.html', {'pedido': pedido})
 
 def add(request):
-    cantidad_pedido = Stock.objects.all()
+    if request.GET.get('id'):
+        id_pedido = request.GET.get('id')
+        print(id_pedido)
+        cantidad_pedido = Stock.objects.all()
+        return render(request, 'add.html', {'id_pedido': id_pedido, 'cantidad_pedido': cantidad_pedido})
+
+    if request.GET.get('producto'):
+        producto = request.GET.get('producto')
+        cantidad = request.GET.get('cantidad')
+        id_pedido = request.GET.get('id_pedido')
+        print(id_pedido)
+        stockDatos = Stock.objects.get(Cproducto=producto)
         
+        if int(cantidad) > stockDatos.cantidad:
+            messages.info(request, 'Cantidad mayor que la disponible en stock de: {0}!'.format(stockDatos.cantidad))
+            cantidad_pedido = Stock.objects.all()
+            return render(request, 'add.html', {'cantidad_pedido': cantidad_pedido})
+        
+        if int(cantidad) <= stockDatos.cantidad:
+            inicial = Stock.objects.get(Cproducto=producto).cantidad
+            var = Stock(Cproducto=producto, cantidad=inicial-int(cantidad))
+            var.save(force_update=True)
+
+            var2 = detallePedido(Cproducto=Stock.objects.get(Cproducto=producto), Cpedido=Pedido.objects.get(Cpedido=id_pedido), Cantidad=cantidad)
+            var2.save()
+
+            pedido = Pedido.objects.all()
+            return HttpResponseRedirect("/")
 
 
+
+    cantidad_pedido = Stock.objects.all()
     return render(request, 'add.html', {'cantidad_pedido': cantidad_pedido})
