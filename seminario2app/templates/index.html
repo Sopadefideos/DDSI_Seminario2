@@ -18,23 +18,55 @@
     <title>Seminario2</title>
   </head>
   <body>
-    <div class="container border border-dark">
+    <div class="container border border-dark" style="margin-top: 2%; margin-bottom: 2%;">
       <div class="row">
-        <div class="col border border-dark">Column</div>
-        <div class="col border border-dark">Column</div>
-        <div class="w-100"></div>
         <div class="col border border-dark">
+          <table class="table col border border-dark" style="margin-top: 1%; margin-bottom: 1%;">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Nº de Pedido</th>
+                <th scope="col">ID Cliente</th>
+                <th scope="col">Fecha de Pedido</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for pedidos in pedido %}
+              <tr>
+                <td>{{pedidos.Cpedido}}</td>
+                <td>{{pedidos.Ccliente}}</td>
+                <td>{{pedidos.FechaPedido}}</td>
+                <td>
+                  <a class="btn btn-success" href="?id={{pedidos.Cproducto}}">Ver Informacion</a>
+                  <a class="btn btn-success" href="add/?id={{pedidos.Cproducto}}">Modificar</a>
+                  <a class="btn btn-danger" href="?id={{pedidos.Cproducto}}">Eliminar</a>
+                </td>
+              </tr>
+              {% endfor %}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col border border-dark" style="margin: 1%;">
           <form method="get">
             <h5>RESETEAR TABLAS</h5>
             <label>SI</label>
             <input type="radio" name="option" id="si" value="si"><br>
             <label>NO</label>
             <input type="radio" name="option" id="no" value="no"><br>
-            <button type="submit" class="btn btn-primary">Siguiente!</button>
+            <button type="submit" class="btn btn-dark" style="margin-bottom: 1%;">Siguiente!</button>
+          </form>
+        </div>
+        <div class="col" style="margin: 1%;">
+         <form method="get">
+            <input type="submit" class="btn btn-dark" style="margin-bottom: 1%;" value="Añadir Pedido!"></button>
+            <input type="hidden" name="insertar" id="no" value="insertar"><br>
           </form>
         </div>
       </div>
     </div>
+    </div>
+      
 
     <!--Scripts-->
     <script

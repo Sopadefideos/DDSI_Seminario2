@@ -3,12 +3,12 @@ from datetime import datetime
 # Create your models here.
 
 class Stock(models.Model):
-    Cproducto = models.CharField(max_length=50, primary_key=True)
+    Cproducto = models.IntegerField( primary_key=True)
     cantidad = models.IntegerField()
 
 class Pedido(models.Model):
-    Cpedido = models.CharField(max_length=50, primary_key=True)
-    Ccliente = models.CharField(max_length=50)
+    Cpedido = models.AutoField(primary_key=True)
+    Ccliente = models.IntegerField()
     FechaPedido = models.DateField(default=datetime.now)
 
 class detallePedido(models.Model):
