@@ -4,6 +4,19 @@
 
 _TIENES QUE ESTAR EN EL DIRECTORIO DONDE ESTE EL FICHERO: manage.py_
 
-* [1º] python3 manage.py migrate
-* [2º] python3 manage.py makemigrations
-* [3º] python3 manage.py runserver
+_1er comando_
+
+```
+python3 manage.py migrate
+```
+
+_2º comando_
+
+```
+python3 manage.py makemigrations
+```
+_3er comando_
+
+```
+python3 manage.py runserver
+```
