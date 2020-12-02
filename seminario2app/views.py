@@ -10,6 +10,26 @@ def index(request):
     # MEDIANTE METODO GET TENDREMOS SI EL USER QUIERE BORRAR LAS TABLAS
     # SI EXISTE GET
     if request.GET:
+
+        #SI POR GET EXISTE LA VARIABLE ID_FIN
+        if request.GET.get('id_fin'):
+            #GUARDAMOS LA VARIABLE
+            id_fin = request.GET.get('id_fin')
+            #ACCEDEMOS A LA TABLA DETALLES DONDE APAREZCA EL ID DEL PEDIDO A BORRAR SUS DETALLES
+            details = detallePedido.objects.filter(Cpedido_id=id_fin)
+            #ESTE FOR SE ENCARGARA DE DEVOLVER AL STOCK LA CANTIDAD DE PRODUCTOS QUE TENIA EL PEDIDO
+            for detail in details:
+                id_producto = detail.Cproducto_id
+                cantidadDevolver = detail.Cantidad
+                productoStock = Stock.objects.get(Cproducto=id_producto)
+                var = Stock(Cproducto = id_producto, cantidad = productoStock.cantidad + cantidadDevolver)
+                var.save(force_update=True)
+            #CONSULTA QUE ELIMINARA TODOS LOS DETALLES QUE APAREZCAN CON EL ID DEL PEDIDO
+            detallePedido.objects.filter(Cpedido_id=id_fin).delete()
+            #CONSULTA QUE ELIMINARA TODOS LOS PEDIDOS ID DEL PEDIDO
+            Pedido.objects.filter(Cpedido=id_fin).delete()
+            return HttpResponseRedirect("/")
+
         #SI POR GET EXISTE UNA VARIABLE ID_BORRAR
         if request.GET.get('id_borrar'):
             #GUARDAMOS LA VARIABLE
@@ -80,7 +100,7 @@ def add(request):
             messages.info(request, 'Cantidad mayor que la disponible en stock de: {0}!'.format(stockDatos.cantidad))
             #RENDERIZAMOS LA PAGINA CON EL STOCK PARA RECARGAR EL FORMULARIO
             cantidad_pedido = Stock.objects.all()
-            return render(request, 'add.html', {'cantidad_pedido': cantidad_pedido})
+            return render(request, 'add.html', {'cantidad_pedido': cantidad_pedido, 'id_pedido': id_pedido})
         
         #SI LA CANTIDAD CORRESPONDE CON LOS PARAMETROS DEL STOCK
         if int(cantidad) <= stockDatos.cantidad:
@@ -97,7 +117,7 @@ def add(request):
 
 
     cantidad_pedido = Stock.objects.all()
-    return render(request, 'add.html', {'cantidad_pedido': cantidad_pedido})
+    return render(request, 'add.html', {'cantidad_pedido': cantidad_pedido, 'id_pedido': id_pedido})
 
 
 def see(request):

@@ -43,12 +43,17 @@
             <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="cantidad" />
           </div>
           <button type="submit" class="btn btn-dark" style="margin-bottom: 1%;">Añadir!</button>
-          {% for key, value in request.GET.items %}
+          {% if request.GET.id%}
+            {% for key, value in request.GET.items %}
             {% if key == 'id'%}
-              <input type="hidden" class="form-control" id="id_pedido" name="id_pedido" value="{{ value }}" />
+            <input type="hidden" class="form-control" id="id_pedido" name="id_pedido" value="{{ value }}" />
             {% endif %}
-          {% endfor %}
-          
+            {% endfor %}
+          {% endif %}
+
+          {% if request.GET.id == NULL %}
+            <input type="hidden" class="form-control" id="id_pedido" name="id_pedido" value="{{ id_pedido }}" />
+          {% endif %}
         </form>
       </div>
     </div>

@@ -22,7 +22,6 @@
               <th scope="col">Nº de Pedido</th>
               <th scope="col">ID Cliente</th>
               <th scope="col">Fecha de Pedido</th>
-              <th scope="col">Cantidad</th>
               <th scope="col"></th>
             </tr>
           </thead>
@@ -43,10 +42,9 @@
                     <a class="btn btn-info" href="see/?id={{pedidos.Cpedido}}" style="margin: 1%;">Ver Informacion</a>
                     <a class="btn btn-success" href="add/?id={{pedidos.Cpedido}}" style="margin: 1%;">Añadir detalle de
                       producto</a>
-                    <a class="btn btn-warning" href="?id={{pedidos.Cproducto}}" style="margin: 1%;">Cancelar pedido</a>
                     <a class="btn btn-danger" href="?id_borrar={{pedidos.Cpedido}}" style="margin: 1%;">Eliminar los detalles</a>
-                    <a class="btn btn-danger" href="?id={{pedidos.Cproducto}}" style="margin: 1%;">Finalizar
-                      pedido</a>
+                    <a class="btn btn-danger" href="?id_fin={{pedidos.Cpedido}}" style="margin: 1%;">Cancelar pedido</a>
+                    <a class="btn btn-success" href="/" style="margin: 1%;">Finalizar pedido</a>
                   </div>
                 </div>
               </td>
